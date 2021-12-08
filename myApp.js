@@ -1,9 +1,17 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var mongoose = require('mongoose');
 
 // const envMessageStyle = process.env['MESSAGE_STYLE'];
 console.log('Hello World');
+console.log(process.env.mongoDBCluster);
+
+try{
+  mongoose.connect(process.env.mongoDBCluster, { useNewUrlParser: true, useUnifiedTopology: true });
+} catch (err) {
+  console.log('Cannot connect to DB', err);
+}
 
 // add middleware serving static files from public folder to the public path
 // app.use('/public', express.static(__dirname + '/public'));
