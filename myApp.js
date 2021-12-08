@@ -1,14 +1,14 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-var mongoose = require('mongoose');
+const express = require('express');
+const app = express();
+const path = require('path');
+const mongoose = require('mongoose');
 
 // const envMessageStyle = process.env['MESSAGE_STYLE'];
 console.log('Hello World');
-console.log(process.env.mongoDBCluster);
+console.log(process.env.MONGO_URI);
 
 try{
-  mongoose.connect(process.env.mongoDBCluster, { useNewUrlParser: true, useUnifiedTopology: true });
+  mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 } catch (err) {
   console.log('Cannot connect to DB', err);
 }
