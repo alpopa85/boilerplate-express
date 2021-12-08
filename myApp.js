@@ -8,6 +8,7 @@ console.log('Hello World');
 // add middleware serving static files from public folder to the public path
 // app.use('/public', express.static(__dirname + '/public'));
 app.use('/public', express.static(path.resolve(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   let method = req.method;
@@ -37,8 +38,33 @@ app.get('/json', (req, res) => {
   }  
 });
 
+app.get('/now', (req, res, next) => {
+  res.time = new Date().toString();
+  next();
+}, (req, res) => {
+  res.send({
+    time: res.time
+  });
+});
 
+app.get('/:word/echo', (req, res) => {
+  res.send({
+    echo: req.params.word ? req.params.word : 'N/A'
+  })
+});
 
+app.route('/name')
+  .get((req, res) => {
+    res.send({
+      name: `${req.query.first} ${req.query.last}`
+    })
+  })
+  .post((req, res) => {
+    console.log(req.body);
+    res.send({
+      name: `${req.body.first} ${req.body.last}`
+    })
+  });
 
 
 
